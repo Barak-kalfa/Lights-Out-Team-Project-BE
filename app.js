@@ -1,10 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-// const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
-// const { userRouter } = require("./routes/user-routes");
+const { scoresRouter } = require("./routers/scores-router");
 
 const app = express();
 
@@ -12,11 +10,8 @@ app.use(cors());
 app.use(express.json()); // handle requests that have Content-Type: application/json
 app.use(express.urlencoded({ extended: true })); // handles parsing of forms
 
-// localhost:3001/a.txt
-// app.use(express.static(path.join(__dirname, "static")));
-
 // ROUTERS
-// app.use("/user", userRouter);
+app.use("/scores", scoresRouter);
 
 mongoose.set("strictQuery", true);
 mongoose.connection.on("error", (err) => console.error(err));
