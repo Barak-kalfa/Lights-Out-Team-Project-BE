@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userDal = require("../dal/user-dal");
 const bcrypt = require("bcrypt");
-const { searchPetByQuery, getPetsByUserId } = require("../dal/pet-dal");
-const { Pet } = require("../models/pet-model");
+const { User } = require("../model/user-model");
 
 async function hashPassword(plainPassword) {
   try {
@@ -16,13 +15,7 @@ async function hashPassword(plainPassword) {
 
 function validateUserData(user) {
   try {
-    if (
-      !user.password ||
-      !user.email ||
-      !user.firstName ||
-      !user.lastName ||
-      !user.phoneNumber
-    ) {
+    if (!user.password || !user.email || !user.firstName || !user.lastName) {
       return "Some fields are missing";
     }
 
@@ -88,9 +81,7 @@ async function signup(req, res) {
     const newUser = await userDal.createUser({
       email: user.email,
       password: hashedPassword,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
+      userName: user.userName,
     });
     res.json(newUser);
   } catch (err) {
@@ -120,10 +111,7 @@ const login = async (request, response) => {
     const userData = {
       _id: user._id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
-      favoritePets: user.favoritePets,
+      userName: user.userName,
       isAdmin: user.isAdmin,
     };
 
@@ -136,16 +124,6 @@ const login = async (request, response) => {
     res.status(500).send(err);
   }
 };
-
-async function searchPet(req, res) {
-  try {
-    const { search } = req.query;
-    const result = await searchPetByQuery(search);
-    return res.status(200).json(result);
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-}
 
 async function getAllUsers(req, res) {
   try {
@@ -175,7 +153,6 @@ async function getUserById(req, res) {
 module.exports = {
   signup,
   login,
-  searchPet,
   getAllUsers,
   getUserById,
   updateUser,
