@@ -7,18 +7,17 @@ const {
    hashPwd,
 } = require("../middleware/usersMiddleware");
 const { validateBody } = require("../middleware/validateBody");
-const { userSchema, loginSchema } = require("../schemas/userSchemas");
 
 router.post(
      "/signup",
-     validateBody(userSchema),
-     isNewUser,
-     hashPwd,
+     //validateBody(userSchema),
+   //   isNewUser,
+   //   hashPwd,
      UsersController.signUp);
 
 router.post(
      "/login",
-     validateBody(loginSchema),
+     //validateBody(loginSchema),
       UsersController.login);
 
 router.get('/logout',
@@ -27,7 +26,7 @@ router.get('/logout',
 router.post(
    "/scores",
    validateToken,
-   validateBody(),
+   //validateBody(),
    UsersController.addScore);
 
 router.get(

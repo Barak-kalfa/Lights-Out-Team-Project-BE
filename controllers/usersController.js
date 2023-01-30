@@ -1,4 +1,3 @@
-const dbConnection = require("../knex/knex");
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -7,14 +6,14 @@ app.use(cookieParser());
 
 const {
    signUpModel,
-   deleteUserModel,
    getUserByEmailModel,
-   getUserByIdModel,
-   updateUserModel,
+   addScoreModel,
+   getAllScoresModel,
+   getUserHighScoreModel,
+   getAllUserScoresModel,
 } = require("../models/usersModels");
 
 const { createToken, createAdminToken } = require("../middleware/JWT");
-const { getPetsByUserModel } = require("../models/petsModels");
 
 const signUp = async (req, res) => {
    const newUser = req.body;
@@ -44,35 +43,36 @@ const login = async (req, res) => {
                httpOnly: true,
             });
             console.log("isAdmin:", user.isAdmin);
-         if (user.isAdmin) {
-              const adminAccessToken = createAdminToken(user);
-              res.cookie("admin-access-token", adminAccessToken, {
-                 maxAge: 86400000,
-                 httpOnly: true,
-              });
-         }
+            if (user.isAdmin) {
+               const adminAccessToken = createAdminToken(user);
+               res.cookie("admin-access-token", adminAccessToken, {
+                  maxAge: 86400000,
+                  httpOnly: true,
+               });
+            }
             res.send({
                userName: user.userName,
                email: user.email,
-               isLoggedIn: user.isLoggedIn
+               isLoggedIn: user.isLoggedIn,
             });
          }
       });
    }
 };
 
-const logout = async (req, res) =>{
+const logout = async (req, res) => {
    try {
       res.clearCookie("access-token");
-      console.log('cookies-removed');
-   }catch(err){
+      console.log("cookies-removed");
+   } catch (err) {
       console.log(err);
    }
-}
+};
 
 const addScore = async (req, res) => {
+   const {userName, score} = req.body;
    try {
-     //ADD MODAL
+      const res = addScoreModel(userName, score);
 
       res.send("ScoreAdd");
    } catch (err) {
@@ -81,9 +81,8 @@ const addScore = async (req, res) => {
 };
 
 const getAllScores = async (req, res) => {
-
    try {
-      //ADD MODAL
+      const res = getAllScoresModel(userName);
       res.send("AllScores");
    } catch (err) {
       console.log(err);
@@ -92,7 +91,7 @@ const getAllScores = async (req, res) => {
 
 const getAllUserScores = async (req, res) => {
    try {
-      //ADD MODAL
+      const res = getAllUserScoresModel();
       res.send("AllUserScores");
    } catch (err) {
       console.log(err);
@@ -101,7 +100,7 @@ const getAllUserScores = async (req, res) => {
 
 const getUserLastScore = async (req, res) => {
    try {
-      // ADD MODAL
+      const res = getUserHighScoreModel(userName);
       res.send("userLastScore");
    } catch (err) {
       console.log(err);
@@ -110,8 +109,8 @@ const getUserLastScore = async (req, res) => {
 
 const getUserHighScore = async (req, res) => {
    try {
-      //ADD MODAL
-      res.send('userHighScore')
+      const res = getUserHighScoreModel(userName);
+      res.send("userHighScore");
    } catch (err) {
       console.log(err);
    }
@@ -125,5 +124,5 @@ module.exports = {
    getAllScores,
    getAllUserScores,
    getUserLastScore,
-   getUserHighScore
+   getUserHighScore,
 };

@@ -1,9 +1,10 @@
+const mongoose = require('mongoose')
+const User = require('../schemas/userSchema')
 
 async function signUpModel(newUser) {
    try {
-      // MONGOOSE HERE:
-      
-      if (true) return { ok: true };
+      const user = await User.create(newUser)
+      if (user) return { ok: true };
    } catch (err) {
       console.log(err);
    }
@@ -67,7 +68,6 @@ async function getUserHighScoreModel(userId) {
 
 module.exports = {
    signUpModel,
-   readAllUsersModel,
    getUserByEmailModel,
    addScoreModel,
    getAllScoresModel,

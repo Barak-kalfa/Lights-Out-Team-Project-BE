@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const { scoresRouter } = require("./routers/scores-router");
 
 const app = express();
+const userRoutes = require("./routes/userRoutes.js");
+
 
 app.use(cors());
 app.use(express.json()); // handle requests that have Content-Type: application/json
@@ -12,7 +14,7 @@ app.use(express.urlencoded({ extended: true })); // handles parsing of forms
 
 // ROUTERS
 app.use("/scores", scoresRouter);
-app.use('/click', clickRouter)
+app.use("/user", userRoutes);
 
 mongoose.set("strictQuery", true);
 mongoose.connection.on("error", (err) => console.error(err));
