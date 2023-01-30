@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true })); // handles parsing of forms
 
 // ROUTERS
 app.use("/scores", scoresRouter);
+app.use('/click', clickRouter)
 
 mongoose.set("strictQuery", true);
 mongoose.connection.on("error", (err) => console.error(err));
