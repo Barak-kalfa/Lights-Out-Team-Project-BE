@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const userDal = require('../dal/user-dal');
 const bcrypt = require('bcrypt');
 
@@ -6,7 +7,8 @@ async function hashPassword(plainPassword) {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    return hashedPassword;
+    console.log('hash', salt);
+    return salt;
   } catch (err) {
     res.status(500).send(err);
   }
@@ -61,12 +63,10 @@ async function updateUser(req, res) {
 async function signup(req, res) {
   try {
     const user = req.body;
-
     const validationErrorMessage = validateUserData(user);
     if (validationErrorMessage) {
       return res.status(400).send({ message: validationErrorMessage });
     }
-
     const isUserExist = await userDal.getUserByEmail(user.email);
     if (isUserExist) {
       return res.status(400).send({ message: 'Email already exist' });
@@ -107,13 +107,13 @@ const login = async (req, res) => {
       isAdmin: user.isAdmin,
     };
 
-    // const token = jwt.sign(userData, process.env.JWT, { expiresIn: '2 days' });
-    // const twoDays = 2 * 24 * 60 * 60 * 1000;
-    // response.cookie('jwt', token, { secure: true, maxAge: twoDays });
+    const token = jwt.sign(userData, process.env.JWT, { expiresIn: '2 days' });
+    const twoDays = 2 * 24 * 60 * 60 * 1000;
+    res.cookie('jwt', token, { secure: true, maxAge: twoDays });
 
-    response.json(userData);
+    res.json(userData);
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).send(err.message);
   }
 };
 
