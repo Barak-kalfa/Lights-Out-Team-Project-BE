@@ -11,7 +11,7 @@ userRouter.post('/signup', userController.signup);
 userRouter.get('/logout', userController.logout);
 
 // Scores:
-userRouter.post('/scores', requireLogin, userController.addScore);
+userRouter.post('/scores', userController.addScore);
 userRouter.get('/scores', requireLogin, userController.getAllScores);
 userRouter.get('/scores/:userName', requireLogin, userController.getAllUserScores);
 userRouter.get('/scores/last/:userName', requireLogin, userController.getUserLastScore);

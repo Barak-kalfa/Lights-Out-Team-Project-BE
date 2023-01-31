@@ -21,7 +21,7 @@ function getUsers(filter = {}) {
 
 ////////////////////////////////////////////////////////////////
 // Scores
-// const addScoreModel = async (score) => {
+// const  = async (score) => {
 //   try {
 //     // ADD MONGOOSE
 
@@ -30,49 +30,64 @@ function getUsers(filter = {}) {
 //     console.log(err);
 //   }
 // };
-// function addScoreToUser(petId, userId) {
-//   return User.findByIdAndUpdate(
-//     userId,
-//     { $push: { scoresHistory: petId } },
-//     { returnDocument: 'after' }
-//   );
+
+async function addScoreModel(user) {
+  await User.findById(user);
+  return User.findByIdAndUpdate({ scoresHistory: user.scoresHistory }).select('-password');
+}
+
+// const getAllScoresModel = async () => {
+//   try {
+//     // ADD MONGOOSE HERE:
+
+//     return 'AllScores';
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+async function getAllScoresModel(scoresHistory) {
+  const user = await User.findOne({ scoresHistory });
+  return user;
+}
+
+// async function getAllUserScoresModel(userId) {
+//   try {
+//     // ADD MONGOOSE HERE:
+//     return 'AllUserScores';
+//   } catch (err) {
+//     console.log(err);
+//   }
 // }
 
-const getAllScoresModel = async () => {
-  try {
-    // ADD MONGOOSE HERE:
-
-    return 'AllScores';
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 async function getAllUserScoresModel(userId) {
-  try {
-    // ADD MONGOOSE HERE:
-    return 'AllUserScores';
-  } catch (err) {
-    console.log(err);
-  }
+  const user = await User.findById(userId).select('-password');
+  return user;
 }
 
+// async function getUserLastScoreModel(userId) {
+//   try {
+//     // ADD MONGOOSE HERE:
+//     return 'getUserLastScore';
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 async function getUserLastScoreModel(userId) {
-  try {
-    // ADD MONGOOSE HERE:
-    return 'getUserLastScore';
-  } catch (err) {
-    console.log(err);
-  }
+  const user = await User.findById(userId).select('-password');
+  return user;
 }
 
+// async function getUserHighScoreModel(userId) {
+//   try {
+//     // ADD MONGOOSE HERE:
+//     return 'getUserLastScore';
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 async function getUserHighScoreModel(userId) {
-  try {
-    // ADD MONGOOSE HERE:
-    return 'getUserLastScore';
-  } catch (err) {
-    console.log(err);
-  }
+  const user = await User.findById(userId).select('-password');
+  return user;
 }
 
 module.exports = {
@@ -80,7 +95,7 @@ module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
-  // addScoreModel,
+  addScoreModel,
   // addScoreToUser,
   getAllScoresModel,
   getAllUserScoresModel,

@@ -149,9 +149,9 @@ const logout = async (req, res) => {
 };
 
 const addScore = async (req, res) => {
-  const { userName, score } = req.body;
+  const { email, score, date } = req.body;
   try {
-    const res = addScoreModel(userName, score);
+    const res = addScoreModel(email, score, date);
 
     res.send('ScoreAdd');
   } catch (err) {
