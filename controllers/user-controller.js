@@ -7,7 +7,7 @@ async function hashPassword(plainPassword) {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    console.log('hash', salt);
+    console.log('hash', hashedPassword);
     return salt;
   } catch (err) {
     res.status(500).send(err);
@@ -87,7 +87,7 @@ async function signup(req, res) {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+
     if (!password || !email) {
       return res.status(400).send({ message: 'Some fields are missing' });
     }
@@ -95,6 +95,7 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: 'Invalid Email or Password' });
     }
+    
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
       return res.status(400).send({ message: 'Invalid Email or Password' });
@@ -148,6 +149,7 @@ const logout = async (req, res) => {
 };
 
 const addScore = async (req, res) => {
+  console.log('xx', req.body);
   const { userName, score } = req.body;
   try {
     const res = addScoreModel(userName, score);
