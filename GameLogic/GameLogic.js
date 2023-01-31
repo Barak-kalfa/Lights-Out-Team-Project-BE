@@ -1,15 +1,10 @@
-
-function randomBoolean(){
-     const num = Math.random();
-     return num > 0.5 ? true : false;
+function randomBoolean() {
+  const num = Math.random();
+  return num > 0.5 ? true : false;
 }
 
-function startGame(){
-     
-}
+function startGame() {}
 
-function handleClick({userName, lightId}){
+function handleClick({ userName, lightId }) {}
 
-}
-
-module.exports = {randomBoolean}
+module.exports = { randomBoolean };

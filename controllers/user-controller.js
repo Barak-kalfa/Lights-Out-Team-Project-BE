@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const userDal = require("../dal/user-dal");
-const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const userDal = require('../dal/user-dal');
+const bcrypt = require('bcrypt');
 
 async function hashPassword(plainPassword) {
   try {
@@ -15,14 +15,14 @@ async function hashPassword(plainPassword) {
 function validateUserData(user) {
   try {
     if (!user.password || !user.email || !user.userName) {
-      return "Some fields are missing";
+      return 'Some fields are missing';
     }
 
     if (user.password !== user.passwordRepeat) {
-      return "Passwords do not match";
+      return 'Passwords do not match';
     }
     if (user.password.length < 6) {
-      return "Passwords too short, minimum 6 chars";
+      return 'Passwords too short, minimum 6 chars';
     }
   } catch (err) {
     res.status(500).send(err);
@@ -40,13 +40,9 @@ async function updateUser(req, res) {
     }
 
     if (updatedUserData.email !== req.user.email) {
-      const emailAlreadyExist = await userDal.getUserByEmail(
-        updatedUserData.email
-      );
+      const emailAlreadyExist = await userDal.getUserByEmail(updatedUserData.email);
       if (emailAlreadyExist) {
-        return res
-          .status(400)
-          .send({ message: "New email address already used" });
+        return res.status(400).send({ message: 'New email address already used' });
       }
     }
 
@@ -73,7 +69,7 @@ async function signup(req, res) {
 
     const isUserExist = await userDal.getUserByEmail(user.email);
     if (isUserExist) {
-      return res.status(400).send({ message: "Email already exist" });
+      return res.status(400).send({ message: 'Email already exist' });
     }
 
     const hashedPassword = await hashPassword(user.password);
@@ -93,19 +89,15 @@ const login = async (request, response) => {
     const { email, password } = request.body;
 
     if (!password || !email) {
-      return res.status(400).send({ message: "Some fields are missing" });
+      return res.status(400).send({ message: 'Some fields are missing' });
     }
     const user = await userDal.getUserByEmail(email);
     if (!user) {
-      return response
-        .status(400)
-        .send({ message: "Invalid Email or Password" });
+      return response.status(400).send({ message: 'Invalid Email or Password' });
     }
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
-      return response
-        .status(400)
-        .send({ message: "Invalid Email or Password" });
+      return response.status(400).send({ message: 'Invalid Email or Password' });
     }
     const userData = {
       _id: user._id,
@@ -114,9 +106,9 @@ const login = async (request, response) => {
       isAdmin: user.isAdmin,
     };
 
-    const token = jwt.sign(userData, process.env.JWT, { expiresIn: "2 days" });
+    const token = jwt.sign(userData, process.env.JWT, { expiresIn: '2 days' });
     const twoDays = 2 * 24 * 60 * 60 * 1000;
-    response.cookie("jwt", token, { secure: true, maxAge: twoDays });
+    response.cookie('jwt', token, { secure: true, maxAge: twoDays });
 
     response.json(userData);
   } catch (err) {
@@ -148,8 +140,8 @@ async function getUserById(req, res) {
 // TODO: need to check that this works
 const logout = async (req, res) => {
   try {
-    res.clearCookie("access-token");
-    console.log("cookies-removed");
+    res.clearCookie('access-token');
+    console.log('cookies-removed');
   } catch (err) {
     console.log(err);
   }
@@ -160,7 +152,7 @@ const addScore = async (req, res) => {
   try {
     const res = addScoreModel(userName, score);
 
-    res.send("ScoreAdd");
+    res.send('ScoreAdd');
   } catch (err) {
     console.log(err);
   }
@@ -169,7 +161,7 @@ const addScore = async (req, res) => {
 const getAllScores = async (req, res) => {
   try {
     const res = getAllScoresModel(userName);
-    res.send("AllScores");
+    res.send('AllScores');
   } catch (err) {
     console.log(err);
   }
@@ -178,7 +170,7 @@ const getAllScores = async (req, res) => {
 const getAllUserScores = async (req, res) => {
   try {
     const res = getAllUserScoresModel();
-    res.send("AllUserScores");
+    res.send('AllUserScores');
   } catch (err) {
     console.log(err);
   }
@@ -187,7 +179,7 @@ const getAllUserScores = async (req, res) => {
 const getUserLastScore = async (req, res) => {
   try {
     const res = getUserHighScoreModel(userName);
-    res.send("userLastScore");
+    res.send('userLastScore');
   } catch (err) {
     console.log(err);
   }
@@ -196,7 +188,7 @@ const getUserLastScore = async (req, res) => {
 const getUserHighScore = async (req, res) => {
   try {
     const res = getUserHighScoreModel(userName);
-    res.send("userHighScore");
+    res.send('userHighScore');
   } catch (err) {
     console.log(err);
   }
