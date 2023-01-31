@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   userName: {
@@ -13,12 +13,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  scoresHistory: [],
+  scoresHistory: {
+    type: [String],
+    default: [],
+  },
+
   isAdmin: {
     type: Boolean,
     default: false,
   },
 });
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model('users', userSchema);
 
 module.exports = { User };

@@ -21,15 +21,22 @@ function getUsers(filter = {}) {
 
 ////////////////////////////////////////////////////////////////
 // Scores
-const addScoreModel = async (score) => {
-  try {
-    // ADD MONGOOSE
+// const addScoreModel = async (score) => {
+//   try {
+//     // ADD MONGOOSE
 
-    return 'ScoreAddedCondition';
-  } catch (err) {
-    console.log(err);
-  }
-};
+//     return 'ScoreAddedCondition';
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// function addScoreToUser(petId, userId) {
+//   return User.findByIdAndUpdate(
+//     userId,
+//     { $push: { scoresHistory: petId } },
+//     { returnDocument: 'after' }
+//   );
+// }
 
 const getAllScoresModel = async () => {
   try {
@@ -73,7 +80,8 @@ module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
-  addScoreModel,
+  // addScoreModel,
+  // addScoreToUser,
   getAllScoresModel,
   getAllUserScoresModel,
   getUserLastScoreModel,
