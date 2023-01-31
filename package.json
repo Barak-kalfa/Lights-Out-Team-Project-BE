@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/Barak-kalfa/Lights-Out-Team-Project-BE#readme",
   "dependencies": {
-    "ajv": "^8.12.0",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
