@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const { userRouter } = require("./routers/user-router");
 
 const app = express();
+const userRoutes = require("./routes/userRoutes.js");
+
 
 app.use(cors());
 app.use(express.json()); // handle requests that have Content-Type: application/json
