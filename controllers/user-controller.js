@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 const userDal = require('../dal/user-dal');
 const bcrypt = require('bcrypt');
 
@@ -113,7 +112,7 @@ const login = async (req, res) => {
 
     res.json(userData);
   } catch (err) {
-    res.status(500).send(err.message);
+    return res.status(400).send({ message: err.message });
   }
 };
 
@@ -126,6 +125,7 @@ async function getAllUsers(req, res) {
   }
 }
 
+// not needed right now
 // async function getUserById(req, res) {
 //   const { userId } = req.params;
 //   try {
