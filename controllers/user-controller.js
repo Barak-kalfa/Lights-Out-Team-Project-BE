@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const userDal = require('../dal/user-dal');
 const bcrypt = require('bcrypt');
 
@@ -6,7 +7,8 @@ async function hashPassword(plainPassword) {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    return hashedPassword;
+    console.log('hash', salt);
+    return salt;
   } catch (err) {
     res.status(500).send(err);
   }
@@ -61,17 +63,15 @@ async function updateUser(req, res) {
 async function signup(req, res) {
   try {
     const user = req.body;
-
     const validationErrorMessage = validateUserData(user);
     if (validationErrorMessage) {
       return res.status(400).send({ message: validationErrorMessage });
     }
-
     const isUserExist = await userDal.getUserByEmail(user.email);
     if (isUserExist) {
       return res.status(400).send({ message: 'Email already exist' });
     }
-
+    
     const hashedPassword = await hashPassword(user.password);
     const newUser = await userDal.createUser({
       email: user.email,
@@ -84,20 +84,20 @@ async function signup(req, res) {
   }
 }
 
-const login = async (request, response) => {
+const login = async (req, res) => {
   try {
-    const { email, password } = request.body;
-
+    const { email, password } = req.body;
+    
     if (!password || !email) {
       return res.status(400).send({ message: 'Some fields are missing' });
     }
     const user = await userDal.getUserByEmail(email);
     if (!user) {
-      return response.status(400).send({ message: 'Invalid Email or Password' });
+      return res.status(400).send({ message: 'Invalid Email or Password' });
     }
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
-      return response.status(400).send({ message: 'Invalid Email or Password' });
+      return res.status(400).send({ message: 'Invalid Email or Password' });
     }
     const userData = {
       _id: user._id,
@@ -105,14 +105,14 @@ const login = async (request, response) => {
       userName: user.userName,
       isAdmin: user.isAdmin,
     };
-
+    
     const token = jwt.sign(userData, process.env.JWT, { expiresIn: '2 days' });
     const twoDays = 2 * 24 * 60 * 60 * 1000;
-    response.cookie('jwt', token, { secure: true, maxAge: twoDays });
+    res.cookie('jwt', token, { secure: true, maxAge: twoDays });
 
-    response.json(userData);
+    res.json(userData);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.message);
   }
 };
 
