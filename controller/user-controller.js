@@ -15,7 +15,7 @@ async function hashPassword(plainPassword) {
 
 function validateUserData(user) {
   try {
-    if (!user.password || !user.email || !user.firstName || !user.lastName) {
+    if (!user.password || !user.email || !user.userName) {
       return "Some fields are missing";
     }
 
@@ -128,11 +128,7 @@ const login = async (request, response) => {
 async function getAllUsers(req, res) {
   try {
     const users = await userDal.getUsers();
-    const ownedPets = {};
-    for (const user of users) {
-      ownedPets[user._id] = await getPetsByUserId(user._id);
-    }
-    res.json({ users, ownedPets });
+    res.json({ users });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -150,10 +146,12 @@ async function getUserById(req, res) {
   }
 }
 
-module.exports = {
+const userController = {
   signup,
   login,
   getAllUsers,
-  getUserById,
+  // getUserById,
   updateUser,
 };
+
+module.exports = userController;
