@@ -149,64 +149,12 @@ const logout = async (req, res) => {
   }
 };
 
-const addScore = async (req, res) => {
-  const { email, score, date } = req.body;
-  try {
-    const res = addScoreModel(email, score, date);
-
-    res.send('ScoreAdd');
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const getAllScores = async (req, res) => {
-  try {
-    const res = getAllScoresModel(userName);
-    res.send('AllScores');
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const getAllUserScores = async (req, res) => {
-  try {
-    const res = getAllUserScoresModel();
-    res.send('AllUserScores');
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const getUserLastScore = async (req, res) => {
-  try {
-    const res = getUserHighScoreModel(userName);
-    res.send('userLastScore');
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const getUserHighScore = async (req, res) => {
-  try {
-    const res = getUserHighScoreModel(userName);
-    res.send('userHighScore');
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const userController = {
   signup,
   login,
   getAllUsers,
   logout,
   updateUser,
-  addScore,
-  getUserHighScore,
-  getUserLastScore,
-  getAllUserScores,
-  getAllScores,
 };
 
 module.exports = userController;

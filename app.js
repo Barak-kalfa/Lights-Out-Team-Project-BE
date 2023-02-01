@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { userRouter } = require('./routers/user-router');
+const { scoreRouter } = require('./routers/score-router');
 
 const app = express();
 
@@ -11,7 +12,8 @@ app.use(express.json()); // handle requests that have Content-Type: application/
 app.use(express.urlencoded({ extended: true })); // handles parsing of forms
 
 // ROUTERS
-app.use('/user', userRouter);
+app.use('/users', userRouter);
+app.use('/scores', scoreRouter);
 
 mongoose.set('strictQuery', true);
 mongoose.connection.on('error', (err) => console.error(err));
