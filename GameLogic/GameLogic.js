@@ -41,17 +41,32 @@ function prevChar(c) {
 }
 
 function changeNextTo(id, grid) {
-  const L = id[0];
-  const N = Number(id[1]);
-  const newGrid = {
-    ...grid,
-    [id]: !grid[id],
-    [nextChar(L) + N]: !grid[nextChar(L) + N],
-    [prevChar(L) + N]: !grid[prevChar(L) + N],
-    [L + (N - 1)]: !grid[L + (N - 1)],
-    [L + (N + 1)]: !grid[L + (N - 1)],
-  };
-  return newGrid;
+  const newGrid = grid;
+  for (let light in grid) {
+    if (light === id) {
+      const L = id[0];
+      const N = Number(id[1]);
+            console.log('?x?x?x', grid[light]);
+
+      grid[light] = (grid[light] );
+      console.log('???', grid[light] == 1);
+      const up = prevChar(L) + N;
+      const down = nextChar(L) + N;
+      const right = L + (N + 1);
+      const left = L + (N - 1);
+      grid[down] = !!grid[down];
+      grid[up] = !!grid[up];
+      grid[left] = !!grid[left];
+      grid[right] = !!grid[right];
+    }
+  }
+  // console.log('grid', grid);
+  // const newGrid = {
+  //   ...grid,
+  //   [id]: !grid[id],
+  // };
+  // // console.log('newgrid', newGrid);
+  // return newGrid;
 }
 
 module.exports = { randomBoolean, startGame, changeNextTo };

@@ -13,10 +13,11 @@ async function getUserGrid(email) {
 }
 
 async function userClick(email, id) {
-     const grid = Grid.findOne({ player1: email });
-     console.log('playerGrid', grid);
+     const grid = await Grid.findOne({ player1: email });
+     // console.log('playerGrid', grid);
      const newGrid = changeNextTo(id, grid);
-     Grid.findOneAndUpdate({ email: email }, newGrid);
+     // console.log('newGrid', newGrid);
+     // Grid.findOneAndUpdate({ email: email }, newGrid);
      return newGrid;
 }
 
