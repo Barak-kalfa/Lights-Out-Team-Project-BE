@@ -13,45 +13,59 @@ const addScore = async (req, res) => {
 
 const getAllScores = async (req, res) => {
   try {
-    const res = scoreDal.getAllScoresModel(userName);
-    res.send('AllScores');
+    const scores = await scoreDal.getAllScores();
+    // res.json -> sends response in json format
+    res.json(scores);
   } catch (err) {
     console.log(err);
+    return res.status(400).send({ message: err.message });
   }
 };
 
-const getAllUserScores = async (req, res) => {
+const getScoresByEmail = async (req, res) => {
   try {
-    const res = scoreDal.getAllUserScoresModel();
-    res.send('AllUserScores');
+    const email = req.params.email;
+    const scoresByEmail = await scoreDal.getScoresByEmail(email);
+    res.json(scoresByEmail);
   } catch (err) {
     console.log(err);
+    return res.status(400).send({ message: err.message });
   }
 };
 
 const getUserLastScore = async (req, res) => {
   try {
-    const res = getUserHighScoreModel(userName);
-    res.send('userLastScore');
+    const email = req.params.email;
+    const lastScoreByEmail = await scoreDal.getUserLastScore(email);
+    if (!lastScoreByEmail) {
+      return res.send({ message: `User ${email} has no scores` });
+    }
+    res.json(lastScoreByEmail);
   } catch (err) {
     console.log(err);
+    return res.status(400).send({ message: err.message });
   }
 };
 
-const getUserHighScore = async (req, res) => {
+const getUserHighestScore = async (req, res) => {
   try {
-    const res = scoreDal.getUserHighScoreModel(userName);
-    res.send('userHighScore');
+    const email = req.params.email;
+    const highestScoreByEmail = await scoreDal.getUserHighestScore(email);
+    if (!highestScoreByEmail) {
+      return res.send({ message: `User ${email} has no scores` });
+    }
+    res.json(highestScoreByEmail);
   } catch (err) {
     console.log(err);
+    return res.status(400).send({ message: err.message });
   }
 };
 
 const scoreController = {
   addScore,
-  getUserHighScore,
+  getUserHighestScore,
   getUserLastScore,
-  getAllUserScores,
+  getScoresByEmail,
   getAllScores,
 };
 
