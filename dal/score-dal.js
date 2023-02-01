@@ -8,6 +8,10 @@ async function getAllScores() {
   return Score.find();
 }
 
+async function getSearchTopFiveScores() {
+  return Score.find().sort({ score: -1, clicks: 1 }).limit(5);
+}
+
 async function getScoresByEmail(email) {
   return Score.find({ email });
 }
@@ -19,10 +23,6 @@ async function getUserLastScore(email) {
 
 async function getUserHighestScore(email) {
   const [result] = await Score.find({ email }).sort({ score: -1 }).limit(1);
-  return result;
-}
-async function getSearchTopFiveScores(query) {
-  const [result] = await Score.find({ query }).sort({ score: -1, clicks: 1 }).limit(5);
   return result;
 }
 

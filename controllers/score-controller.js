@@ -26,8 +26,7 @@ const getAllScores = async (req, res) => {
 
 const getSearchTopFiveScores = async (req, res) => {
   try {
-    const email = req.params.email;
-    const topFiveScores = await scoreDal.getSearchTopFiveScores(email);
+    const topFiveScores = await scoreDal.getSearchTopFiveScores();
     res.json(topFiveScores);
   } catch (err) {
     console.log(err);

@@ -7,8 +7,9 @@ const { requireLogin } = require('../middleware/require-login');
 // Scores:
 scoreRouter.post('/', scoreController.addScore);
 scoreRouter.get('/', requireLogin, scoreController.getAllScores);
+scoreRouter.get('/top-five', scoreController.getSearchTopFiveScores);
 scoreRouter.get('/:email', requireLogin, scoreController.getScoresByEmail);
 scoreRouter.get('/last/:email', requireLogin, scoreController.getUserLastScore);
 scoreRouter.get('/high/:email', requireLogin, scoreController.getUserHighestScore);
-scoreRouter.get('/top-five', scoreController.getSearchTopFiveScores);
+
 module.exports = { scoreRouter };
