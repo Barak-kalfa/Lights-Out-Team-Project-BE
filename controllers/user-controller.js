@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 const userDal = require('../dal/user-dal');
+const fs = require('fs');
+const path = require('path');
+const gridDal = require('../dal/grid-dal');
 const bcrypt = require('bcrypt');
 
 async function hashPassword(plainPassword) {
@@ -125,23 +128,24 @@ async function getAllUsers(req, res) {
     return res.status(500).json({ message: err.message });
   }
 }
-
-// TODO: need to check that this works
-const logout = async (req, res) => {
+async function addPlayer(req, res) {
   try {
-    res.clearCookie('access-token');
-    console.log('cookies-removed');
+    const email = req.params.email;
+    const playerTwo = req.player2._id;
+    await gridDal.addPlayer(email, playerTwo);
+    res.json({ message: 'Player 2 added successfully' });
   } catch (err) {
     console.log(err);
+    return res.status(400).send({ message: err.message });
   }
-};
+}
 
 const userController = {
   signup,
   login,
   getAllUsers,
-  logout,
   updateUser,
+  addPlayer,
 };
 
 module.exports = userController;

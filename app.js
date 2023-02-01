@@ -1,5 +1,6 @@
 require('dotenv').config(); // loads environment variables from .env (process.env.VAR_NAME)
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -13,6 +14,8 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json()); // handle requests that have Content-Type: application/json
 app.use(express.urlencoded({ extended: true })); // handles parsing of forms
 app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname)));
 
 // ROUTERS
 app.use('/users', userRouter);

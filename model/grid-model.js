@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const gridSchema = new mongoose.Schema({
   player1: {
     type: String,
-    required: true
+    required: true,
   },
   player2: {
-    type: String,
+    type: [String],
+    default: [],
   },
   A1: {
     type: Boolean,

@@ -7,5 +7,6 @@ const { requireLogin } = require('../middleware/require-login');
 userRouter.get('/', requireLogin, userController.getAllUsers);
 userRouter.post('/login', userController.login);
 userRouter.post('/signup', userController.signup);
+userRouter.post('/:email/add-player', userController.addPlayer);
 
 module.exports = { userRouter };
