@@ -126,19 +126,6 @@ async function getAllUsers(req, res) {
   }
 }
 
-// not needed right now
-// async function getUserById(req, res) {
-//   const { userId } = req.params;
-//   try {
-//     const user = await userDal.getUserById(userId);
-//     res.json({
-//       user: { ...user.toObject(), ...user. },
-//     });
-//   } catch (err) {
-//     return res.status(500).json({ message: err.message });
-//   }
-// }
-
 // TODO: need to check that this works
 const logout = async (req, res) => {
   try {
