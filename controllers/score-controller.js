@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 
 const addScore = async (req, res) => {
   try {
-    const { email, score, date } = req.body;
-    const newScore = await scoreDal.addScore(email, score, date);
+    const { email, score, clicks, date } = req.body;
+    const newScore = await scoreDal.addScore(email, score, clicks, date);
     res.json(newScore);
   } catch (err) {
     console.log(err);

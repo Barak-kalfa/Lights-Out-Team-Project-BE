@@ -1,7 +1,7 @@
 const { Score } = require('../model/score-model');
 
-async function addScore(email, score, date) {
-  return Score.create({ email, score, date });
+async function addScore(email, score, clicks, date) {
+  return Score.create({ email, score, clicks, date });
 }
 
 async function getAllScores() {
