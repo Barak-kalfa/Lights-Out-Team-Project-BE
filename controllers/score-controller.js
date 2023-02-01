@@ -24,6 +24,17 @@ const getAllScores = async (req, res) => {
   }
 };
 
+const getSearchTopFiveScores = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const topFiveScores = await scoreDal.getSearchTopFiveScores(email);
+    res.json(topFiveScores);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send({ message: err.message });
+  }
+};
+
 const getScoresByEmail = async (req, res) => {
   try {
     const email = req.params.email;
@@ -63,24 +74,13 @@ const getUserHighestScore = async (req, res) => {
   }
 };
 
-const searchTopFiveScores = async (req, res) => {
-  try {
-    const email = req.params.email;
-    const topFiveScoresByEmail = await scoreDal.searchTopFiveScores(email);
-    res.json(topFiveScoresByEmail);
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send({ message: err.message });
-  }
-};
-
 const scoreController = {
   addScore,
   getUserHighestScore,
   getUserLastScore,
   getScoresByEmail,
   getAllScores,
-  searchTopFiveScores,
+  getSearchTopFiveScores,
 };
 
 module.exports = scoreController;
