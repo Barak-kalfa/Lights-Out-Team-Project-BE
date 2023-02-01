@@ -4,10 +4,8 @@ const userRouter = new Router();
 // const { requireAdmin } = require("../middleware/require-admin");
 const { requireLogin } = require('../middleware/require-login');
 
-userRouter.get('/', userController.getAllUsers);
-// userRouter.put('/:userId', requireLogin, userController.getUserById);
-userRouter.post('/login', userController.login);
-userRouter.post('/signup', userController.signup);
-userRouter.get('/logout', userController.logout);
+userRouter.get('/', requireLogin, userController.getAllUsers);
+userRouter.post('/login', requireLogin, userController.login);
+userRouter.post('/signup', requireLogin, userController.signup);
 
 module.exports = { userRouter };

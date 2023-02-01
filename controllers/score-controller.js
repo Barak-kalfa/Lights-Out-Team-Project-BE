@@ -1,4 +1,6 @@
 const scoreDal = require('../dal/score-dal');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const addScore = async (req, res) => {
   try {
