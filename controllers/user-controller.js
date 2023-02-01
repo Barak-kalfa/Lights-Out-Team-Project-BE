@@ -6,7 +6,7 @@ async function hashPassword(plainPassword) {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    console.log('hash', salt);
+    console.log('hash', hashedPassword);
     return salt;
   } catch (err) {
     res.status(500).send(err);
@@ -95,6 +95,7 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: 'Invalid Email or Password' });
     }
+
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
       return res.status(400).send({ message: 'Invalid Email or Password' });
