@@ -10,5 +10,4 @@ scoreRouter.get('/', requireLogin, scoreController.getAllScores); // TODO: shoul
 scoreRouter.get('/:email', requireLogin, scoreController.getScoresByEmail); // TODO: should be protected route (requireLogin)
 scoreRouter.get('/last/:email', requireLogin, scoreController.getUserLastScore); // TODO: should be protected route (requireLogin)
 scoreRouter.get('/high/:email', requireLogin, scoreController.getUserHighestScore); // TODO: should be protected route (requireLogin)
-scoreRouter.get('/top-five/:email', requireLogin, scoreController.getTopFiveScores);
 module.exports = { scoreRouter };

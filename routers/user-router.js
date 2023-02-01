@@ -4,7 +4,7 @@ const userRouter = new Router();
 // const { requireAdmin } = require("../middleware/require-admin");
 const { requireLogin } = require('../middleware/require-login');
 
-userRouter.get('/', userController.getAllUsers);
+userRouter.get('/', requireLogin, userController.getAllUsers);
 userRouter.post('/login', userController.login);
 userRouter.post('/signup', userController.signup);
 
