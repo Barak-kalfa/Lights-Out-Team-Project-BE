@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { userRouter } = require('./routers/user-router');
 const { scoreRouter } = require('./routers/score-router');
+const { gridRouter } = require('./routers/grid-router');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 // ROUTERS
 app.use('/users', userRouter);
 app.use('/scores', scoreRouter);
+app.use('/grids', gridRouter);
 
 mongoose.set('strictQuery', true);
 mongoose.connection.on('error', (err) => console.error(err));

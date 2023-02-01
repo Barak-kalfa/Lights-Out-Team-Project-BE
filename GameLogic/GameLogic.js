@@ -2,6 +2,8 @@ const randomBoolean = () => Math.random() > 0.5;
 
 function startGame() {
   const newGrid = {
+    player1: null,
+    player2: null,
     A1: randomBoolean(),
     A2: randomBoolean(),
     A3: randomBoolean(),
