@@ -21,6 +21,10 @@ async function getUserHighestScore(email) {
   const [result] = await Score.find({ email }).sort({ score: -1 }).limit(1);
   return result;
 }
+async function getTopFiveScores(email) {
+  const [result] = await Score.find({ email }).sort({ score: -1 }).limit(5);
+  return result;
+}
 
 module.exports = {
   addScore,
@@ -28,4 +32,5 @@ module.exports = {
   getScoresByEmail,
   getUserLastScore,
   getUserHighestScore,
+  getTopFiveScores,
 };

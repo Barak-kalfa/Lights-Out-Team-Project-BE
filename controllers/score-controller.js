@@ -63,12 +63,27 @@ const getUserHighestScore = async (req, res) => {
   }
 };
 
+const getTopFiveScores = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const topFiveScoresByEmail = await scoreDal.getTopFiveScores(email);
+    // if (!highestScoreByEmail) {
+    //   return res.send({ message: `User ${email} has no scores` });
+    // }
+    res.json(topFiveScoresByEmail);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send({ message: err.message });
+  }
+};
+
 const scoreController = {
   addScore,
   getUserHighestScore,
   getUserLastScore,
   getScoresByEmail,
   getAllScores,
+  getTopFiveScores,
 };
 
 module.exports = scoreController;
